@@ -1,32 +1,45 @@
 import { useState } from "react";
 import Header from "./components/Header";
 import Search from "./components/Search";
+import ImageCard from "./components/ImageCard";
 
 const UNSPLASH_KEY = process.env.REACT_APP_UNSPLASH_KEY;
 
 function App() {
   const [word, setWord] = useState("");
-  const handleSearchSubmit = (e) => {
+  const [images, setImages] = useState([]);
+  const handleSearchSubmit = async (e) => {
     e.preventDefault();
-    console.log(word);
-    fetch(
+    // console.log(word);
+    await fetch(
       `https://api.unsplash.com/photos/random/?query=${word}&client_id=${UNSPLASH_KEY}`
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        const newData = [{ ...data, title: word }, ...images];
+        setImages(newData);
       })
       .catch((err) => {
         console.log(err);
       });
+    setWord("");
   };
 
-  console.log(process.env.REACT_APP_UNSPLASH_KEY);
+  const handleDeleteImage = (id) => {
+    setImages(images.filter((image) => image.id !== id));
+  };
+
+  // console.log(process.env.REACT_APP_UNSPLASH_KEY);
 
   return (
     <div className="App">
       <Header tittle="Images Gallery" />
       <Search word={word} setWord={setWord} handleSubmit={handleSearchSubmit} />
+      <div className="flex flex-wrap pb-4 mx-4 my-4">
+        {images.map((image, i) => (
+          <ImageCard image={image} deleteImage={handleDeleteImage} key={i} />
+        ))}
+      </div>
     </div>
   );
 }
