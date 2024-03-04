@@ -2,6 +2,7 @@ import { useState } from "react";
 import Header from "./components/Header";
 import Search from "./components/Search";
 import ImageCard from "./components/ImageCard";
+import Welcome from "./components/Welcome";
 
 const UNSPLASH_KEY = process.env.REACT_APP_UNSPLASH_KEY;
 
@@ -35,11 +36,16 @@ function App() {
     <div className="App">
       <Header tittle="Images Gallery" />
       <Search word={word} setWord={setWord} handleSubmit={handleSearchSubmit} />
-      <div className="flex flex-wrap pb-4 mx-4 my-4">
-        {images.map((image, i) => (
+      {/* <div className="flex flex-wrap pb-4 mx-4 my-4"> */}
+      {images.length ? (
+        `${images.map((image, i) => (
           <ImageCard image={image} deleteImage={handleDeleteImage} key={i} />
-        ))}
-      </div>
+        ))}`
+      ) : (
+        <Welcome />
+      )}
+
+      {/* </div> */}
     </div>
   );
 }
