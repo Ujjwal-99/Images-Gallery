@@ -36,16 +36,15 @@ function App() {
     <div className="App">
       <Header tittle="Images Gallery" />
       <Search word={word} setWord={setWord} handleSubmit={handleSearchSubmit} />
-      {/* <div className="flex flex-wrap pb-4 mx-4 my-4"> */}
-      {images.length ? (
-        `${images.map((image, i) => (
-          <ImageCard image={image} deleteImage={handleDeleteImage} key={i} />
-        ))}`
-      ) : (
-        <Welcome />
-      )}
-
-      {/* </div> */}
+      <div className="flex flex-wrap pb-4 mx-4 my-4">
+        {images.length ? (
+          images.map((image, i) => (
+            <ImageCard image={image} deleteImage={handleDeleteImage} key={i} />
+          ))
+        ) : (
+          <Welcome />
+        )}
+      </div>
     </div>
   );
 }
