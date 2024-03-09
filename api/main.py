@@ -30,6 +30,10 @@ def new_image():
     data=response.json()
     return data
 
+# @app.route('/images',method=["GET","POST"])
+# def method_name():
+#     pass
+
 
 if __name__ == "__main__" :
   app.run(debug=DEBUG) 
